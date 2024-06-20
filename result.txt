@@ -1,149 +1,67 @@
-MetaMessage('track_name', name='Xylophone', time=0)
-MetaMessage('time_signature', numerator=4, denominator=4, clocks_per_click=24, notated_32nd_notes_per_beat=8, time=0)
-MetaMessage('key_signature', key='C', time=0)
-MetaMessage('set_tempo', tempo=500000, time=0)
-control_change channel=0 control=121 value=0 time=0
-control_change channel=0 control=100 value=0 time=0
-control_change channel=0 control=101 value=0 time=0
-control_change channel=0 control=6 value=12 time=0
-control_change channel=0 control=100 value=127 time=0
-control_change channel=0 control=101 value=127 time=0
-program_change channel=0 program=13 time=0
-control_change channel=0 control=7 value=100 time=0
-control_change channel=0 control=10 value=64 time=0
-control_change channel=0 control=91 value=0 time=0
-control_change channel=0 control=93 value=0 time=0
-MetaMessage('midi_port', port=0, time=0)
-note_on channel=0 note=81 velocity=80 time=0
-note_on channel=0 note=81 velocity=0 time=479
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=479
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=479
-note_on channel=0 note=77 velocity=80 time=1
-note_on channel=0 note=77 velocity=0 time=359
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=119
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=479
-note_on channel=0 note=77 velocity=80 time=1
-note_on channel=0 note=77 velocity=0 time=359
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=119
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=959
-note_on channel=0 note=88 velocity=80 time=1
-note_on channel=0 note=88 velocity=0 time=479
-note_on channel=0 note=88 velocity=80 time=1
-note_on channel=0 note=88 velocity=0 time=479
-note_on channel=0 note=88 velocity=80 time=1
-note_on channel=0 note=88 velocity=0 time=479
-note_on channel=0 note=89 velocity=80 time=1
-note_on channel=0 note=89 velocity=0 time=239
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=239
-note_on channel=0 note=80 velocity=80 time=1
-note_on channel=0 note=80 velocity=0 time=479
-note_on channel=0 note=77 velocity=80 time=1
-note_on channel=0 note=77 velocity=0 time=359
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=119
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=959
-note_on channel=0 note=93 velocity=80 time=1
-note_on channel=0 note=93 velocity=0 time=479
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=239
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=239
-note_on channel=0 note=93 velocity=80 time=1
-note_on channel=0 note=93 velocity=0 time=479
-note_on channel=0 note=92 velocity=80 time=1
-note_on channel=0 note=92 velocity=0 time=239
-note_on channel=0 note=91 velocity=80 time=1
-note_on channel=0 note=91 velocity=0 time=239
-note_on channel=0 note=90 velocity=80 time=1
-note_on channel=0 note=90 velocity=0 time=239
-note_on channel=0 note=89 velocity=80 time=1
-note_on channel=0 note=89 velocity=0 time=239
-note_on channel=0 note=90 velocity=80 time=1
-note_on channel=0 note=90 velocity=0 time=239
-note_on channel=0 note=82 velocity=80 time=1
-note_on channel=0 note=82 velocity=0 time=239
-note_on channel=0 note=87 velocity=80 time=1
-note_on channel=0 note=87 velocity=0 time=479
-note_on channel=0 note=86 velocity=80 time=1
-note_on channel=0 note=86 velocity=0 time=239
-note_on channel=0 note=85 velocity=80 time=1
-note_on channel=0 note=85 velocity=0 time=239
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=239
-note_on channel=0 note=83 velocity=80 time=1
-note_on channel=0 note=83 velocity=0 time=239
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=239
-note_on channel=0 note=77 velocity=80 time=1
-note_on channel=0 note=77 velocity=0 time=239
-note_on channel=0 note=80 velocity=80 time=1
-note_on channel=0 note=80 velocity=0 time=479
-note_on channel=0 note=77 velocity=80 time=1
-note_on channel=0 note=77 velocity=0 time=359
-note_on channel=0 note=80 velocity=80 time=1
-note_on channel=0 note=80 velocity=0 time=119
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=479
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=239
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=239
-note_on channel=0 note=88 velocity=80 time=1
-note_on channel=0 note=88 velocity=0 time=959
-note_on channel=0 note=93 velocity=80 time=1
-note_on channel=0 note=93 velocity=0 time=479
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=239
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=239
-note_on channel=0 note=93 velocity=80 time=1
-note_on channel=0 note=93 velocity=0 time=479
-note_on channel=0 note=92 velocity=80 time=1
-note_on channel=0 note=92 velocity=0 time=239
-note_on channel=0 note=91 velocity=80 time=1
-note_on channel=0 note=91 velocity=0 time=239
-note_on channel=0 note=90 velocity=80 time=1
-note_on channel=0 note=90 velocity=0 time=239
-note_on channel=0 note=89 velocity=80 time=1
-note_on channel=0 note=89 velocity=0 time=239
-note_on channel=0 note=90 velocity=80 time=1
-note_on channel=0 note=90 velocity=0 time=239
-note_on channel=0 note=82 velocity=80 time=1
-note_on channel=0 note=82 velocity=0 time=239
-note_on channel=0 note=87 velocity=80 time=1
-note_on channel=0 note=87 velocity=0 time=479
-note_on channel=0 note=86 velocity=80 time=1
-note_on channel=0 note=86 velocity=0 time=239
-note_on channel=0 note=85 velocity=80 time=1
-note_on channel=0 note=85 velocity=0 time=239
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=239
-note_on channel=0 note=83 velocity=80 time=1
-note_on channel=0 note=83 velocity=0 time=239
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=239
-note_on channel=0 note=77 velocity=80 time=1
-note_on channel=0 note=77 velocity=0 time=239
-note_on channel=0 note=80 velocity=80 time=1
-note_on channel=0 note=80 velocity=0 time=479
-note_on channel=0 note=77 velocity=80 time=1
-note_on channel=0 note=77 velocity=0 time=359
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=119
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=479
-note_on channel=0 note=77 velocity=80 time=1
-note_on channel=0 note=77 velocity=0 time=239
-note_on channel=0 note=84 velocity=80 time=1
-note_on channel=0 note=84 velocity=0 time=239
-note_on channel=0 note=81 velocity=80 time=1
-note_on channel=0 note=81 velocity=0 time=959
-MetaMessage('end_of_track', time=1)
+note_on 81 0.0
+note_on 81 0.5
+note_on 81 1.0
+note_on 77 1.5
+note_on 84 1.875
+note_on 81 2.0
+note_on 77 2.5
+note_on 84 2.875
+note_on 81 3.0
+note_on 88 4.0
+note_on 88 4.5
+note_on 88 5.0
+note_on 89 5.5
+note_on 84 5.75
+note_on 80 6.0
+note_on 77 6.5
+note_on 84 6.875
+note_on 81 7.0
+note_on 93 8.0
+note_on 81 8.5
+note_on 81 8.75
+note_on 93 9.0
+note_on 92 9.5
+note_on 91 9.75
+note_on 90 10.0
+note_on 89 10.25
+note_on 90 10.5
+note_on 82 10.75
+note_on 87 11.0
+note_on 86 11.5
+note_on 85 11.75
+note_on 84 12.0
+note_on 83 12.25
+note_on 84 12.5
+note_on 77 12.75
+note_on 80 13.0
+note_on 77 13.5
+note_on 80 13.875
+note_on 84 14.0
+note_on 81 14.5
+note_on 84 14.75
+note_on 88 15.0
+note_on 93 16.0
+note_on 81 16.5
+note_on 81 16.75
+note_on 93 17.0
+note_on 92 17.5
+note_on 91 17.75
+note_on 90 18.0
+note_on 89 18.25
+note_on 90 18.5
+note_on 82 18.75
+note_on 87 19.0
+note_on 86 19.5
+note_on 85 19.75
+note_on 84 20.0
+note_on 83 20.25
+note_on 84 20.5
+note_on 77 20.75
+note_on 80 21.0
+note_on 77 21.5
+note_on 84 21.875
+note_on 81 22.0
+note_on 77 22.5
+note_on 84 22.75
+note_on 81 23.0
+end_of_track 24.0
