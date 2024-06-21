@@ -80,7 +80,7 @@ for i, track in enumerate(mid_file.tracks):
 result_file.close()
 
 
-# Utilisation: renvoie une liste, parametre, nom du fichier
+# Utilisation: renvoie nombre de frames/secondes et listes de frames, parametre, nom du fichier, appel "nb_frames, list_frames = get_frames(filename)"
 def get_frames(file_name):
     file = open(file_name, 'r')
     f_line = file.readline()
