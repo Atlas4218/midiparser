@@ -1,0 +1,294 @@
+import bpy
+from math import radians
+import random
+
+# Spécifiez le nom du fichier de texte contenant votre script de base
+script_name = "base_animation"
+
+# Vérifiez si le fichier de texte existe dans Blender
+if script_name in bpy.data.texts:
+    script = bpy.data.texts[script_name]
+    exec(script.as_string())
+else:
+    print(f"Le script {script_name} n'existe pas dans les fichiers de texte de Blender.")
+
+# Définir les paramètres de l'animation
+bpy.context.scene.frame_start = 1
+bpy.context.scene.frame_end = 2634  # Assurez-vous que cela couvre toute la durée de l'animation
+
+# Fonction pour arrêter l'animation après un certain nombre de frames
+def stop_animation_after_frames(num_frames):
+    for frame in range(1, num_frames + 1):
+        bpy.context.scene.frame_set(frame)
+        bpy.context.view_layer.update()
+        bpy.context.evaluated_depsgraph_get().update()
+    bpy.ops.screen.animation_cancel(restore_frame=False)
+
+# Fonction pour créer un matériau de xylophone
+def create_xylophone_material(image_path=None):
+    material = bpy.data.materials.new(name="MateriauXylophone")
+    material.use_nodes = True
+    nodes = material.node_tree.nodes
+    links = material.node_tree.links
+
+    # Supprimer tous les nœuds par défaut
+    for node in nodes:
+        nodes.remove(node)
+
+    # Ajouter les nœuds nécessaires
+    output_node = nodes.new(type='ShaderNodeOutputMaterial')
+    emission_node = nodes.new(type='ShaderNodeEmission')
+    mix_shader_node = nodes.new(type='ShaderNodeMixShader')
+    bsdf_node = nodes.new(type='ShaderNodeBsdfPrincipled')
+    
+    # Positionner les nœuds pour une meilleure organisation (optionnel)
+    output_node.location = (400, 0)
+    emission_node.location = (200, 0)
+    bsdf_node.location = (0, 0)
+    mix_shader_node.location = (200, -200)
+
+    # Connecter les nœuds
+    links.new(emission_node.outputs['Emission'], mix_shader_node.inputs[2])
+    links.new(bsdf_node.outputs['BSDF'], mix_shader_node.inputs[1])
+    links.new(mix_shader_node.outputs['Shader'], output_node.inputs['Surface'])
+
+    # Ajuster les propriétés des nœuds
+    random_color = (random.random(), random.random(), random.random(), 1)  # Couleur aléatoire
+    emission_node.inputs['Color'].default_value = random_color
+    emission_node.inputs['Strength'].default_value = 20  # Légèrement émissif
+    bsdf_node.inputs['Base Color'].default_value = random_color
+
+    if image_path:
+        tex_image_node = nodes.new(type='ShaderNodeTexImage')
+        mapping_node = nodes.new(type='ShaderNodeMapping')
+        texture_coord_node = nodes.new(type='ShaderNodeTexCoord')
+
+        # Positionner les nœuds
+        tex_image_node.location = (-200, 0)
+        mapping_node.location = (-400, 0)
+        texture_coord_node.location = (-600, 0)
+
+        # Connecter les nœuds
+        links.new(texture_coord_node.outputs['UV'], mapping_node.inputs['Vector'])
+        links.new(mapping_node.outputs['Vector'], tex_image_node.inputs['Vector'])
+        links.new(tex_image_node.outputs['Color'], bsdf_node.inputs['Base Color'])
+
+        # Charger l'image
+        image = bpy.data.images.load(image_path)
+        tex_image_node.image = image
+
+    return material
+
+# Fonction pour augmenter l'émission d'une lame de xylophone
+def increase_xylophone_emission(xylophone_key, intensity):
+    material = xylophone_key.data.materials[0]
+    nodes = material.node_tree.nodes
+    emission_node = nodes.get('Emission')
+    if emission_node:
+        emission_node.inputs['Strength'].default_value = intensity
+
+# Fonction pour ajouter une lame de xylophone avec un angle spécifié
+def add_xylophone_key(location, angle_y, offset_x=0, offset_z=0):
+    # Créer une nouvelle position avec les offsets
+    offset_location = location.copy()
+    offset_location.x += offset_x
+    offset_location.z += offset_z
+    
+    # Ajouter une lame de xylophone à la nouvelle position avec les offsets
+    bpy.ops.mesh.primitive_cube_add(size=1, location=(offset_location.x, offset_location.y, offset_location.z))
+    xylophone_key = bpy.context.object
+    xylophone_key.scale[0] = 3.0 / 2  # Largeur de 3 cm
+    xylophone_key.scale[1] = 6.0 / 2  # Longueur de 6 cm
+    xylophone_key.scale[2] = 0.5 / 2  # Épaisseur de 0.5 cm
+    
+    # Ajouter un corps rigide à la lame de xylophone
+    bpy.ops.rigidbody.object_add()
+    xylophone_key.rigid_body.type = 'PASSIVE'
+    xylophone_key.rigid_body.friction = 0
+    xylophone_key.rigid_body.restitution = 1.5
+    
+    # Appliquer la rotation
+    xylophone_key.rotation_euler = (0, radians(angle_y), 0)
+    
+    # Ajouter le matériau
+    image_path = None  # Ajoutez le chemin de l'image ici si nécessaire
+    xylophone_material = create_xylophone_material(image_path)
+    xylophone_key.data.materials.append(xylophone_material)
+
+    # Augmenter l'émission de la lame de xylophone
+    increase_xylophone_emission(xylophone_key, 20)  # Ajustez l'intensité de l'émission ici
+
+# 1. Liste des frames où ajouter des lames de xylophone (méthode finale, on voudrait importer directement ces données)
+
+frames_to_add_keys = [100, 154, 208, 261, 303, 316, 370, 410, 424, 531, 586, 640, 693, 735, 748, 801, 842, 856, 964, 1018, 1045, 1071, 1126, 1152, 1180, 1207, 1234, 1261, 1288, 1341, 1369, 1396, 1423, 1450, 1477, 1504, 1558, 1598, 1612, 1666, 1707, 1720, 1828, 1881, 1922, 1936, 1990, 2030, 2043, 2071, 2098, 2125, 2152, 2206, 2232, 2260, 2287, 2314, 2341, 2368, 2422, 2449, 2476, 2531, 2571, 2584]  # Par exemple, à 2 secondes, 4 secondes, 6 secondes, 8 secondes
+initial_offset = 50  # Par exemple, commencer après 50 frames
+
+
+# 2. Intervalle pour placer les lames de xylophone (par exemple, toutes les 50 frames) - pratique pour les tests
+
+#interval_frames = 26
+#initial_offset = 50  # Par exemple, commencer après 50 frames
+#frames_to_add_keys = list(range(initial_offset, bpy.context.scene.frame_end + 1, interval_frames))
+
+
+# 3.L'aléatoire.  
+# Définir la plage d'intervalle en frames
+#interval_min = 15  # Par exemple, minimum 15 frames
+#interval_max = 50  # Par exemple, maximum 30 frames
+# Décalage initial en frames
+#initial_offset = 50  # Par exemple, commencer après 50 frames
+# Calculer les frames où ajouter des lames de xylophone avec un intervalle aléatoire
+#frames_to_add_keys = []
+#current_frame = initial_offset
+#while current_frame <= bpy.context.scene.frame_end:
+#    frames_to_add_keys.append(current_frame)
+#    current_frame += random.randint(interval_min, interval_max)
+# Calculer les frames où ajouter des lames de xylophone
+#frames_to_add_keys = list(range(initial_offset, bpy.context.scene.frame_end + 1, interval_frames))
+
+
+
+
+# Variable pour stocker la position précédente de la balle
+previous_ball_position_x = None
+
+# Boucle pour ajouter des lames de xylophone aux frames spécifiées
+for i, frame in enumerate(frames_to_add_keys):
+    # Lancer l'animation et l'arrêter après le nombre de frames spécifié
+    stop_animation_after_frames(frame)
+    
+    # Observer la position de la balle
+    sphere = bpy.data.objects['BouleDeFlipper']
+    sphere_eval = sphere.evaluated_get(bpy.context.evaluated_depsgraph_get())
+    ball_position = sphere_eval.matrix_world.translation
+    print(f"Position de la balle après {frame} frames : {ball_position}")
+    
+    
+# Déterminer la direction d'où vient la balle
+    if previous_ball_position_x is not None:
+        interval_frames = frame - frames_to_add_keys[i - 1] if i > 0 else frame
+        if ball_position.x < previous_ball_position_x:
+            direction = "right"                      #si droite
+            # Générer un angle et un offset en fonction de la direction et de l'intervalle
+        
+            if interval_frames <= 25: #si trop rapide
+                if abs(abs(ball_position.z) - abs(previous_ball_position_z)) <= 4 : #si meme hauteur 
+                            angle = random.uniform(-4, -12)
+                            offset_z = -1.25  
+                else:
+                    if ball_position.z < previous_ball_position_z:#si z descend
+                        angle = random.uniform(70, 60) 
+                        offset_z = 1.00
+                        offset_x = -0.5
+                    else: #si z monte
+                        angle = -30
+                        offset_z = 1.00
+            else: #si pas trop rapide
+                if abs(abs(ball_position.z) - abs(previous_ball_position_z)) <= 2 : #si meme hauteur
+                
+                    if random.choice([True, False]):
+                        angle = random.uniform(-4, -12)
+                        offset_z = -1.25
+                    else:
+                        angle = random.uniform(50, 70)
+                        offset_z = 0.75
+                else: 
+                    if ball_position.z < previous_ball_position_z: #si z descend
+                        if random.choice([True, False]):
+                            angle = random.uniform(-4, -12)
+                            offset_z = -1
+                        else:
+                            angle = random.uniform(70, 40)
+                            offset_z = 1
+                            offset_x = 0.75
+                    else: #si z monte
+                        angle = random.uniform(-70,-30)
+                        offset_z = 1.15
+                        offset_x = 1
+                        
+        elif ball_position.x > previous_ball_position_x:
+            direction = "left"                      #si gauche
+            # Générer un angle et un offset en fonction de la direction et de l'intervalle
+            if interval_frames <= 25: #si trop rapide
+                if abs(abs(ball_position.z) - abs(previous_ball_position_z)) <= 4 : #si meme hauteur 
+                            angle = random.uniform(4, 12)
+                            offset_z = -1.25  
+                else:       
+                    if ball_position.z < previous_ball_position_z: #si z descend
+                        angle = random.uniform(-70, -60) 
+                        offset_z = 1.00
+                        offset_x = 0.5
+                    else:                           #si z monte
+                        angle = 30
+                        offset_z = 1.00
+            else: #si pas trop rapide
+                    if abs(abs(ball_position.z) - abs(previous_ball_position_z)) <= 2 : #si meme hauteur
+                
+                        if random.choice([True, False]):
+                            angle = random.uniform(4, 12)
+                            offset_z = -1.25
+                        else:
+                            angle = random.uniform(-50, -70)
+                            offset_z = 0.75
+                    else:
+                        if ball_position.z < previous_ball_position_z: #si z descend 
+                            if random.choice([True, False]):
+                                angle = random.uniform(4, 12)
+                                offset_z = -1
+                            else:
+                                angle = random.uniform(-40, -70)
+                                offset_z = 0.75
+                        else:                            #si z monte
+                            angle = random.uniform(70, 30)
+                            offset_z = 1.25
+                            offset_x = -1    
+        else:
+            direction = "straight"
+            angle = -4
+            offset_z = -1
+        print(f"La balle vient de la {direction} (changement en X de {previous_ball_position_x} à {ball_position.x})")
+    else:
+        direction = "unknown"
+        angle = -50
+        offset_z = 1.25
+        print(f"Direction initiale inconnue (position en X : {ball_position.x})")
+    
+    # Mettre à jour la position précédente de la balle
+    previous_ball_position_x = ball_position.x
+    previous_ball_position_z = ball_position.z
+    
+
+    
+        # Ajouter une lame de xylophone à la position observée avec l'angle et l'offset calculés
+    add_xylophone_key(ball_position, angle, offset_x=0, offset_z=offset_z)
+    
+    
+ # Simuler l'animation
+for frame in range(bpy.context.scene.frame_start, bpy.context.scene.frame_end + 1):
+    bpy.context.scene.frame_set(frame)
+    bpy.context.view_layer.update()
+    bpy.context.evaluated_depsgraph_get().update()
+
+# Définir les frames de début et de fin de l'animation
+bpy.context.scene.frame_start = 1
+bpy.context.scene.frame_end = 2634  # Assurez-vous que cela couvre toute la durée de l'animation
+
+# Définir la caméra active
+bpy.context.scene.camera = camera
+
+# Spécifier le chemin de sortie
+bpy.context.scene.render.filepath = 'C:/Users/Benoit/OneDrive/YouTube/satisfaisante/test_export/test_16.mp4'
+
+# Configurer le format de sortie
+bpy.context.scene.render.image_settings.file_format = 'FFMPEG'
+bpy.context.scene.render.ffmpeg.format = 'MPEG4'
+bpy.context.scene.render.ffmpeg.codec = 'H264'
+bpy.context.scene.render.ffmpeg.video_bitrate = 6000
+bpy.context.scene.render.ffmpeg.constant_rate_factor = 'HIGH'
+
+bpy.context.scene.eevee.use_bloom = True
+bpy.context.scene.eevee.use_gtao = True
+
+
+# Rendre l'animation
+bpy.ops.render.render(animation=True)
