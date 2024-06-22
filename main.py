@@ -63,3 +63,9 @@ def get_frames(file_name):
 #exemple
 list, nb_frames = get_frames("result.txt")
 print(list)
+list_file = open("frame_list.txt", 'w')
+list_file.write("[")
+for i in range(list.__len__() - 1):
+    list_file.write(str(list[i]) + ", ")
+list_file.write(str(list[list.__len__() - 1]) + "]")
+list_file.close()
